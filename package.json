@@ -1,0 +1,24 @@
+{
+  "name": "mini-erp-task-tracker",
+  "version": "1.0.0",
+  "description": "A small task-tracking application built with Cloudflare Pages, Cloudflare Workers, and Cloudflare D1.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessebradford/mini-erp-task-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jessebradford/mini-erp-task-tracker/issues"
+  },
+  "homepage": "https://github.com/jessebradford/mini-erp-task-tracker#readme",
+  "devDependencies": {
+    "wrangler": "^4.120.1"
+  }
+}

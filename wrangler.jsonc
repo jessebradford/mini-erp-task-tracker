@@ -1,0 +1,15 @@
+{
+  "name": "mini-erp-task-tracker-api",
+  "main": "worker/src/index.js",
+  "compatibility_date": "2026-08-10",
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mini-erp-task-tracker-db",
+      "database_id": "b5fd07f4-ac89-4d1a-a3bb-be9187459348",
+      "migrations_dir": "migrations",
+      "remote": true
+    }
+  ]
+}

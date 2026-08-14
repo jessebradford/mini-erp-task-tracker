@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Mini ERP Task Tracker</title>
 
@@ -10,92 +14,364 @@
 </head>
 
 <body>
-  <header>
-    <h1>Mini ERP Task Tracker</h1>
-    <p>Internal task management</p>
+  <header class="app-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">Operations Dashboard</p>
+
+        <h1>Mini ERP Task Tracker</h1>
+
+        <p class="subtitle">
+          Manage work, priorities, ownership, and deadlines
+          from one place.
+        </p>
+      </div>
+
+      <div class="header-actions">
+        <button
+          id="theme-toggle"
+          class="secondary-button header-button"
+          type="button"
+        >
+          Dark Mode
+        </button>
+      </div>
+    </div>
   </header>
 
-  <<main>
-  <section>
-    <h2>Create Task</h2>
-
-    <form id="task-form">
-      <div>
-        <label for="title">Title</label>
-        <input id="title" name="title" type="text" required />
+  <main class="app-shell">
+    <!-- CREATE / EDIT PANEL -->
+    <section class="panel create-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Task Entry</p>
+          <h2>Create or Edit Task</h2>
+        </div>
       </div>
 
-      <div>
-        <label for="description">Description</label>
-        <textarea id="description" name="description"></textarea>
+      <form id="task-form">
+        <div class="form-grid">
+          <div class="form-field full-width">
+            <label for="title">Title</label>
+
+            <input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="e.g. Review inventory levels"
+              required
+            />
+          </div>
+
+          <div class="form-field full-width">
+            <label for="description">Description</label>
+
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Add any relevant task details..."
+            ></textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="assigned_employee">
+              Assigned Employee
+            </label>
+
+            <input
+              id="assigned_employee"
+              name="assigned_employee"
+              type="text"
+              placeholder="Employee name"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="due_date">Due Date</label>
+
+            <input
+              id="due_date"
+              name="due_date"
+              type="date"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="status">Status</label>
+
+            <select id="status" name="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">
+                In Progress
+              </option>
+              <option value="Blocked">Blocked</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="priority">Priority</label>
+
+            <select id="priority" name="priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>
+                Medium
+              </option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            id="save-task-button"
+            class="primary-button"
+            type="submit"
+          >
+            Save Task
+          </button>
+
+          <button
+            id="cancel-edit"
+            class="secondary-button"
+            type="button"
+          >
+            Clear Form
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TASK AREA -->
+    <section class="panel tasks-panel">
+      <div class="tasks-heading-row">
+        <div>
+          <p class="eyebrow">Work Queue</p>
+          <h2>Tasks</h2>
+        </div>
+
+        <div class="view-switch">
+          <span class="view-label">Cards</span>
+
+          <label class="switch">
+            <input id="view-toggle" type="checkbox" />
+            <span class="slider"></span>
+          </label>
+
+          <span class="view-label">Table</span>
+        </div>
       </div>
 
-      <div>
-        <label for="assigned_employee">Assigned Employee</label>
-        <input
-          id="assigned_employee"
-          name="assigned_employee"
-          type="text"
-        />
+      <!-- TASK SUMMARY -->
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span class="summary-label">Total</span>
+          <strong id="summary-total">0</strong>
+        </div>
+
+        <div class="summary-card open-summary">
+          <span class="summary-label">Open</span>
+          <strong id="summary-open">0</strong>
+        </div>
+
+        <div class="summary-card progress-summary">
+          <span class="summary-label">In Progress</span>
+          <strong id="summary-progress">0</strong>
+        </div>
+
+        <div class="summary-card blocked-summary">
+          <span class="summary-label">Blocked</span>
+          <strong id="summary-blocked">0</strong>
+        </div>
+
+        <div class="summary-card completed-summary">
+          <span class="summary-label">Completed</span>
+          <strong id="summary-completed">0</strong>
+        </div>
+
+        <div class="summary-card overdue-summary">
+          <span class="summary-label">Overdue</span>
+          <strong id="summary-overdue">0</strong>
+        </div>
       </div>
 
-      <div>
-        <label for="status">Status</label>
-        <select id="status" name="status">
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Blocked">Blocked</option>
-          <option value="Completed">Completed</option>
-        </select>
+      <!-- FILTERS -->
+      <div class="control-grid">
+        <div class="control-field search-field">
+          <label for="task-search">Search Task</label>
+
+          <input
+            id="task-search"
+            type="search"
+            placeholder="Search title or description..."
+          />
+        </div>
+
+        <div class="control-field">
+          <label for="person-filter">Employee</label>
+
+          <select id="person-filter">
+            <option value="All">All Employees</option>
+          </select>
+        </div>
+
+        <div class="control-field">
+          <label for="status-filter">Status</label>
+
+          <select id="status-filter">
+            <option value="All">All</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">
+              In Progress
+            </option>
+            <option value="Blocked">Blocked</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <div class="control-field">
+          <label for="priority-filter">Priority</label>
+
+          <select id="priority-filter">
+            <option value="All">All</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+
+        <div class="control-field card-sort-control">
+          <label for="sort-select">Card Sort</label>
+
+          <select id="sort-select">
+            <option value="newest">
+              Newest first
+            </option>
+            <option value="due-date">
+              Due date
+            </option>
+            <option value="priority">
+              Priority
+            </option>
+            <option value="title">
+              Title
+            </option>
+          </select>
+        </div>
       </div>
 
-      <div>
-        <label for="priority">Priority</label>
-        <select id="priority" name="priority">
-          <option value="Low">Low</option>
-          <option value="Medium" selected>Medium</option>
-          <option value="High">High</option>
-        </select>
+      <div class="control-footer">
+        <div class="toggle-row">
+          <label class="toggle-control">
+            <input
+              id="hide-completed"
+              type="checkbox"
+            />
+
+            <span>Hide completed</span>
+          </label>
+
+          <label class="toggle-control">
+            <input
+              id="compact-view"
+              type="checkbox"
+            />
+
+            <span>Compact cards</span>
+          </label>
+        </div>
+
+        <button
+          id="reset-filters"
+          class="reset-button"
+          type="button"
+        >
+          Reset Filters
+        </button>
       </div>
 
-      <div>
-        <label for="due_date">Due Date</label>
-        <input id="due_date" name="due_date" type="date" />
+      <div
+        id="message"
+        class="status-message"
+      >
+        Loading tasks...
       </div>
 
-      <button type="submit">Create Task</button>
-    </form>
-  </section>
+      <!-- CARD VIEW -->
+      <div id="card-view">
+        <div
+          id="task-list"
+          class="task-grid"
+        ></div>
+      </div>
 
-  <section>
-    <h2>Tasks</h2>
+      <!-- TABLE VIEW -->
+      <div
+        id="table-view"
+        class="table-view hidden"
+      >
+        <div class="table-help">
+          Click a column heading to sort.
+          Click again to reverse the order.
+          Editable cells save after confirmation.
+        </div>
 
-    <div class="task-toolbar">
-  <label for="status-filter">Filter by status</label>
+        <div class="table-wrapper">
+          <table class="task-table">
+            <thead>
+              <tr>
+                <th data-sort="id">
+                  ID
+                  <span class="sort-indicator"></span>
+                </th>
 
-  <select id="status-filter">
-    <option value="All">All</option>
-    <option value="Open">Open</option>
-    <option value="In Progress">In Progress</option>
-    <option value="Blocked">Blocked</option>
-    <option value="Completed">Completed</option>
-  </select>
-</div>
+                <th data-sort="title">
+                  Title
+                  <span class="sort-indicator"></span>
+                </th>
 
-    <p id="message">Loading tasks...</p>
+                <th data-sort="description">
+                  Description
+                  <span class="sort-indicator"></span>
+                </th>
 
-    <div id="task-list">
-      <!-- Tasks will be inserted here by JavaScript -->
-    </div>
-  </section>
-</main>>
-    <section>
-      <h2>Tasks</h2>
+                <th data-sort="assigned_employee">
+                  Employee
+                  <span class="sort-indicator"></span>
+                </th>
 
-      <p id="message">Loading tasks...</p>
+                <th data-sort="status">
+                  Status
+                  <span class="sort-indicator"></span>
+                </th>
 
-      <div id="task-list">
-        <!-- Tasks will be inserted here by JavaScript -->
+                <th data-sort="priority">
+                  Priority
+                  <span class="sort-indicator"></span>
+                </th>
+
+                <th data-sort="due_date">
+                  Due Date
+                  <span class="sort-indicator"></span>
+                </th>
+
+                <th data-sort="created_at">
+                  Created
+                  <span class="sort-indicator"></span>
+                </th>
+
+                <th data-sort="updated_at">
+                  Updated
+                  <span class="sort-indicator"></span>
+                </th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="task-table-body"></tbody>
+          </table>
+        </div>
       </div>
     </section>
   </main>
